@@ -4,6 +4,7 @@
 
 # INIT ----
 rm(list = ls())
+
 if(!require("pacman")) install.packages("pacman")
 pacman::p_load('tidyverse','here', 'dplyr', 'readr')
                
@@ -15,13 +16,9 @@ CLASSES_DATA = file.path('2023-college', 'raw', 'classes.csv') # lookup used for
 PAGE_CODEBOOK_DATA = file.path('2023-college', 'codebooks', 'codebook_page_pageviews.csv') # codebook for matching chapter and page information
 
 OUTPUT_PATH = here('data', '2023-college-processed') # directory for writing processed data
-
 # Create the directory if it doesn't exist
 if (!dir.exists(OUTPUT_PATH)) {
   dir.create(OUTPUT_PATH, recursive = TRUE)
-  message("Directory created: ", OUTPUT_PATH)
-} else {
-  message("Directory already exists: ", OUTPUT_PATH)
 }
 
 
