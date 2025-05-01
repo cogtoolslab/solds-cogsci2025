@@ -155,7 +155,6 @@ student_page_view_chapter_summary = student_page_view_summary |>
 #   # are the values sensible?
 # summary(student_page_view_chapter_summary$proportion_pages_complete_student)
 # unique(student_page_view_chapter_summary$proportion_pages_complete_student)
-# 
 
 
 
@@ -167,6 +166,106 @@ save(student_page_view_chapter_summary, file = file.path(OUTPUT_PATH, 'processed
 write_csv(student_page_view_chapter_summary, file.path(OUTPUT_PATH, 'processed_college_23_engagement.csv'))
 
 
+# SPLIT-HALF CORRELATION ----
 
+## BOOTSTRAP ----
+set.seed(130)
+bootstrap_iters = 1000
 
+split_half_corr_bootstrap = replicate(
+  n = bootstrap_iters,
+  expr = {
+    iter_num <- get("i", envir = parent.frame())
+    # unique pages completed by class
+    unique_class_pages = page_views_processed |>
+      # filter for completed pages
+      filter(was_complete == 'true') |>
+      # keep only the first appearance (earliest time) of each unique page for each student
+      group_by(class_id, student_id, chapter_num, page) |> # still coursewise, just grouping by chapter redundantly here 
+      arrange(dt_accessed_processed, .by_group = TRUE) |>
+      distinct(class_id, student_id,chapter_num, page, .keep_all = TRUE) |>
+      ungroup() |> 
+      # calculate total unique pages accessed in each class
+      group_by(class_id ) |>
+      mutate(
+        total_unique_pages_accessed_class = n_distinct(page),
+      ) |> 
+      ungroup() |>
+      dplyr::select(class_id, chapter_num, page, total_unique_pages_accessed_class) |>
+      distinct(class_id, page, .keep_all = TRUE) |>
+      group_by(class_id) |> 
+      mutate(
+        split = sample(rep(1:2, length.out = n()))
+      ) |>
+      ungroup() |>
+      group_by(class_id, split) |>
+      mutate(
+        split_total_unique_pages_accessed_class = n_distinct(page),
+      ) |> ungroup()
+    
+    # Proportion of pages the student completes in each chapter over time but split half
+    split_half_student_page_view_course = page_views_processed |>
+      # filter for completed pages
+      filter(was_complete == 'true') |>
+      # keep only the first appearance (earliest time) of each unique page for each student
+      group_by(class_id, student_id, chapter_num, page) |>
+      arrange(dt_accessed_processed, .by_group = TRUE) |>
+      distinct(class_id, student_id, chapter_num, page, .keep_all = TRUE) |>
+      ungroup() |>
+      left_join(unique_class_pages, by = c('class_id', 'chapter_num', 'page')) |> 
+      group_by(class_id, split, student_id) |>
+      arrange(dt_accessed_processed, .by_group = TRUE) |>
+      mutate(
+        split_total_unique_pages_complete_student = n_distinct(chapter_num, page),
+        # pages_complete_so_far = row_number(),
+        # proportion_pages_complete_so_far = pages_complete_so_far / total_unique_pages_complete_class,
+        split_proportion_pages_complete_student = split_total_unique_pages_complete_student / split_total_unique_pages_accessed_class
+      ) |>
+      ungroup() |>
+      distinct(class_id, split, student_id, .keep_all = TRUE)
+    
+    split_half_student_page_view_course_wider = split_half_student_page_view_course |>
+      dplyr::select(institution_id,class_id, student_id, split, split_proportion_pages_complete_student) |> 
+      pivot_wider(
+        names_from = split,  
+        values_from = split_proportion_pages_complete_student
+      ) 
+    
+    pearson_corr =  cor.test(split_half_student_page_view_course_wider$`1`, split_half_student_page_view_course_wider$`2`,
+                             use = "pairwise.complete.obs")
+    spearman_corr =  cor.test(split_half_student_page_view_course_wider$`1`, split_half_student_page_view_course_wider$`2`,
+                              method = "spearman", use = "pairwise.complete.obs",exact = FALSE)
+    
+    
+    data.frame(
+      iter_num = iter_num,  # Get the current iteration number
+      spearman = spearman_corr$estimate,
+      pearson = pearson_corr$estimate,
+      spearman_brown = (2*pearson_corr$estimate)/(1+pearson_corr$estimate)
+    )
+  } ,
+  simplify = FALSE
+)
 
+split_half_corr_bootstrap_df <- bind_rows(split_half_corr_bootstrap)
+glimpse(split_half_corr_bootstrap_df)
+
+## SAVE ----
+# Save as .RData 
+save(split_half_corr_bootstrap_df, file = file.path(OUTPUT_PATH, 'processed_college_23_engagement_splithalf.RData'))
+# Save as csv
+write_csv(split_half_corr_bootstrap_df, file.path(OUTPUT_PATH, 'processed_college_23_engagement_splithalf.csv'))
+
+## SUMMARY ----
+split_half_corr_bootstrap_df_summary = tibble(
+  pearson_mean = mean(split_half_corr_bootstrap_df$pearson),
+  pearson_lb = quantile(split_half_corr_bootstrap_df$pearson, 0.025),
+  pearson_ub = quantile(split_half_corr_bootstrap_df$pearson, 0.975),
+  spearman_mean = mean(split_half_corr_bootstrap_df$spearman),
+  spearman_lb = quantile(split_half_corr_bootstrap_df$spearman, 0.025),
+  spearman_ub = quantile(split_half_corr_bootstrap_df$spearman, 0.975),
+  spearman_brown_mean = mean(split_half_corr_bootstrap_df$spearman_brown),
+  spearman_brown_lb = quantile(split_half_corr_bootstrap_df$spearman_brown, 0.025),
+  spearman_brown_ub = quantile(split_half_corr_bootstrap_df$spearman_brown, 0.975)
+)
+print(split_half_corr_bootstrap_df_summary)

@@ -79,21 +79,21 @@ survey_students = survey_data |>
   distinct() |>
   mutate(UID = paste(class_id, student_id, sep = ', ')) |>
   select(UID)
-length(survey_students$UID) # 1438 unique (class, student)
+# length(survey_students$UID) # 1438 unique (class, student)
 
 eoc_students = eoc_data |>
   select(class_id, student_id) |>
   distinct() |>
   mutate(UID = paste(class_id, student_id, sep = ', ')) |>
   select(UID)
-length(eoc_students$UID) # 1487 unique (class, student)
+# length(eoc_students$UID) # 1487 unique (class, student)
 
 engagement_students = engagement_data |> 
   select(class_id, student_id) |>
   distinct() |>
   mutate(UID = paste(class_id, student_id, sep = ', ')) |>
   select(UID)
-length(engagement_students$UID) # 1571 unique (class, student)
+# length(engagement_students$UID) # 1571 unique (class, student)
 
 # 
 # # is survey a subset of EOC?
