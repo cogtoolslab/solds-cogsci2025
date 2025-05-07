@@ -13,10 +13,17 @@ here::i_am("analysis/observational/05_analysis.R")
 
 DATA_PATH = here('data', '2023-college-processed') # top-level directory for data
 DATA_FILE = 'processed_college_23_combined.csv' # CSV file with combined data
-DATA_OUT_PATH = here('results', '2023-college-figures')
+DEMOGRAPHIC_FILE = 'processed_college_23_pre_survey_demographics.csv'
+
+DATA_OUT_PATH = here('results', '2023-college')
 # Create the directory if it doesn't exist
 if (!dir.exists(DATA_OUT_PATH)) {
   dir.create(DATA_OUT_PATH, recursive = TRUE)
+}
+FIGURES_OUT_PATH = here('results', '2023-college', 'figures')
+# Create the directory if it doesn't exist
+if (!dir.exists(FIGURES_OUT_PATH)) {
+  dir.create(FIGURES_OUT_PATH, recursive = TRUE)
 }
 
 
@@ -29,7 +36,48 @@ n_distinct(combined_data$class_id, combined_data$student_id) # 1306 unique stude
 n_distinct(combined_data$class_id) # 45 unique classes
 n_distinct(combined_data$institution_id) # 11 unique institutions
 
-# SELECT MODEL DATA ----  
+# DEMOGRAPHICS FINAL
+all_demographics_data = read_csv(file.path(DATA_PATH, DEMOGRAPHIC_FILE))
+all_demographics_data_wide = all_demographics_data |>
+  select(class_id, student_id, variable_name, response_label) |> 
+  pivot_wider(
+    names_from = variable_name,
+    values_from = response_label
+  )
+
+final_demographics_data = combined_data |>
+  select(class_id, student_id) |> 
+  distinct() |> 
+  left_join(all_demographics_data_wide, by = c('class_id','student_id'))
+
+# calculate the proportion of students who report each value 
+final_demographics_data |>
+  count(gender, name = "count") |>
+  mutate(
+    total_count = sum(count),
+    percentage = count*100 / total_count
+  )
+
+# Race1 counts and proportions
+final_demographics_data |>
+  count(race1, name = "count") |>
+  mutate(
+    total_count = sum(count),
+    percentage = count*100 / total_count
+  )|>
+  arrange(desc(percentage))
+
+# year counts and proportions
+final_demographics_data |>
+  count(year, name = "count") |>
+  mutate(
+    total_count = sum(count),
+    percentage = count*100 / total_count
+  ) |>
+  arrange(desc(percentage))
+
+# SELECT RELEVANT DATA ----  
+# columns to be used in modeling and correlations 
 
 model_data = combined_data |>
   select(
@@ -40,20 +88,9 @@ model_data = combined_data |>
     # attitudes
     construct_mean_anxiety_math,
     construct_mean_attitude_programming,
-    # construct_mean_belonging_general,
-    # construct_mean_experience_math, # maybe keep?
     construct_mean_experience_programming,
-    # construct_mean_fixed_mindset_math,
-    # construct_mean_interest_general, # maybe keep?
     construct_mean_interest_math,
-    # construct_mean_interest_programming, # maybe keep?
-    # construct_mean_mindset_fixedBelonging,
-    # construct_mean_orientation_achievementGoal,
-    # construct_mean_orientation_learningGoal,
-    # construct_mean_past_performance_math,
-    # construct_mean_sacrifice_perceived,
     construct_mean_selfEfficacy,
-    # construct_mean_selfEfficacy_programming, # maybe keep?
     construct_mean_stress_expectation,
     construct_mean_value_task,
     eoc_score
@@ -70,7 +107,6 @@ construct_data <- model_data |>
 rcorr_res <- corr.test(construct_data) #rcorr(as.matrix(construct_data), type = "pearson")
 construct_cor_matrix <- rcorr_res$r
 construct_p_matrix <- rcorr_res$p
-
 
 ## silhouette score ----
 
@@ -206,4 +242,39 @@ dev.off()
 
 
 
+
+# DYNAMICS ----
+engagement_plot = ggplot(model_data, aes(x = proportion_pages_complete_student, color = factor(chapter_num))) +
+  geom_density(
+    size = 1, adjust = 1.5
+    #size = 1
+  ) + # KDE lines with different colors for conditions
+  geom_hline(yintercept = -0.1, color = "black", size = 0.5) +
+  scale_x_continuous(
+    name = "Engagement (pages_complete)",
+    limits = c(0, 1),                     # Set range from 0 to 1
+    breaks = seq(0, 1, by = 0.25)         # Set ticks at 0.25 intervals
+  ) +
+  scale_color_manual(
+    name = "chapter",
+    values = rev(colorRampPalette(brewer.pal(9, "YlGn"))(20))[1:13]
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16),
+    text = element_text(size = 12),
+    legend.position = "bottom", # Move legend to the bottom
+    #panel.grid.major = element_blank(),  # Remove major grid lines
+    panel.grid.minor = element_blank(),  # Remove minor grid lines
+    axis.title.y = element_blank(), # Remove y-axis label
+    axis.text.y = element_blank(),  # Remove y-axis ticks
+    axis.ticks.y = element_blank()  # Remove y-axis tick marks
+  )
+
+eng_plot
+
+# MODELING ----
+
+## AIC BOOTSTRAPPING----
+### BOOTSTRAPPING ----
 

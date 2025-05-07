@@ -66,7 +66,7 @@ pre_course_survey_codebook = responses_codebook |> filter(str_detect(lrn_activit
 
 # > Process pre-course survey ----
 
-# Split out individual survey item respones and convert to integers, keep only relevant columns
+# Split out individual survey item response and convert to integers, keep only relevant columns
 # NB: this increases number of rows substantially
 pre_course_survey_processed = pre_course_survey |>
   filter(lrn_type != 'shorttext', lrn_type != 'plaintext') |> # remove survey question formats we won't use
@@ -113,7 +113,6 @@ pre_course_survey_processed = pre_course_survey_processed |>
 # n_distinct(pre_course_survey_processed$class_id, pre_course_survey_processed$student_id)
 
 
-
 # > Process codebook ----
 
 # Add column for number of response options available on each survey question, keep only relevant columns
@@ -131,14 +130,56 @@ pre_course_survey_codebook_processed = pre_course_survey_codebook |>
 # # sanity checks
 # glimpse(pre_course_survey_codebook_processed)
 
+# DEMOGRAPHIC DATA ----
+# mappings from codebook and textbook
+demographic_items = c('gender','race1', 'year')
+gender_response_mapping = c(
+                "0" = "Male",
+                "1" = "Female",
+                "2" = "Non-binary",
+                "3" = "Prefer to self-describe"
+                )
+race1_response_mapping = c(
+                "0" = "American Indian or Alaska Native",
+                "1" = "Asian or Asian Am.",
+                "2" = "Black or African Am.",
+                "3" = "Hispanic, Latino, or Spanish Origin",
+                "4" = "Middle Eastern or North African",
+                "5" = "Native Hawaiian or Pacific Islander",
+                "6" = "White",
+                "7" = "Prefer to self-describe"
+              )
+year_response_mapping = c(
+                "0" = "Freshman",
+                "1" = "Sophomore",
+                "2" = "Junior",
+                "3" = "Senior",
+                "4" = "Other"
+              )
 
+pre_course_survey_demographics = pre_course_survey_processed|>
+  left_join(pre_course_survey_codebook_processed |> select(-lrn_type, -prompt), by = 
+              c('release', 'lrn_question_reference','order')) |> 
+  mutate(variable_name = trimws(variable_name)) |>
+  filter(variable_name %in% demographic_items) |>
+  mutate(
+    response_label = case_when(
+      variable_name == "gender" ~ gender_response_mapping[as.character(response_choice)],
+      variable_name == "race1" ~ race1_response_mapping[as.character(response_choice)],
+      variable_name == "year" ~ year_response_mapping[as.character(response_choice)],
+      TRUE ~ NA_character_
+    )
+  )
+
+# pre_course_survey_demographics |>
+#   count(variable_name, response_label)
+
+# n_distinct(pre_course_survey_demographics$student_id) # 1429
+# n_distinct(pre_course_survey_demographics$class_id, pre_course_survey_demographics$student_id) # 1437
+
+write_csv(pre_course_survey_demographics, file.path(OUTPUT_PATH, 'processed_college_23_pre_survey_demographics.csv'))
 
 # COMBINE DATA ----
-
-# SEE DEMOGRAPHIC DATA
-# pre_course_survey_combined = pre_course_survey_processed |>
-#   left_join(pre_course_survey_codebook_processed, by = c('release', 'lrn_question_reference', 'order'))
-# write_csv(pre_course_survey_combined, file.path(OUTPUT_PATH, 'processed_college_23_pre_survey_ALL_QUESTIONS.csv'))
 
 # Combine survey data with codebook variables
 pre_course_survey_combined = pre_course_survey_processed |>
