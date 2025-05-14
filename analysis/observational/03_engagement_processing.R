@@ -15,7 +15,7 @@ PAGEVIEWS_DATA = file.path('2023-college', 'raw', 'page_views.Rdata') # path to 
 CLASSES_DATA = file.path('2023-college', 'raw', 'classes.csv') # lookup used for matching institution and class with book and release
 PAGE_CODEBOOK_DATA = file.path('2023-college', 'codebooks', 'codebook_page_pageviews.csv') # codebook for matching chapter and page information
 
-OUTPUT_PATH = file.path('data', '2023-college-processed') # directory for writing processed data
+OUTPUT_PATH = here('data', '2023-college-processed') # directory for writing processed data
 # Create the directory if it doesn't exist
 if (!dir.exists(OUTPUT_PATH)) {
   dir.create(OUTPUT_PATH, recursive = TRUE)
