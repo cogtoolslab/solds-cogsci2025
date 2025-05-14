@@ -1,15 +1,5 @@
-Directory to contain experiment code (e.g., HTML/CSS/JavaScript) for this project.
+Directory to contain experiment information
 
-### Checklist for starting data collection on new online experiment
-- Complete your OSF pre-registration worksheet
-- Make sure that data is being saved correctly by drafting your analysis notebook
-- Write instructions
-- Figure out how subject payment is going to work
-- Add consent form to appear before instructions
-
-#### Using Amazon Mechanical Turk?
-- Configure HIT settings using nosub: https://github.com/longouyang/nosub
-- Test task out in MTurk Sandbox
-
-### Using Prolific? 
-- `TODO: add instructions here`
+* `module_control.pdf` : control module randomly assigned to half of the students in study 2
+* `module_intervention.pdf` : intervention module randomly assigned to half of the students in study 2
+* `q_manipulation_questions.csv` : post intervention questions in study 2
