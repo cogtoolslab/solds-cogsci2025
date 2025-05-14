@@ -157,9 +157,6 @@ engagement_students = engagement_data |>
 # # how many students do we have survey data *AND* engagement data *AND* EOC data?
 # # 1308 students with at least some survey and engagement data and EOC data
 # length(intersect(intersect(survey_students$UID, engagement_students$UID), eoc_students$UID))
-# 
-
-
 
 # MERGE DATA ----
 
@@ -191,7 +188,6 @@ survey_data_wide = survey_data_summary |>
 # glimpse(survey_data_wide)
 # n_distinct(survey_data_wide$class_id, survey_data_wide$student_id)
 
-
 # merge survey, engagement, and EOC data
 combined_data = survey_data_wide |> 
   # inner join will keep all student survey responses for which we have matched engagement *AND* EOC data in any chapter
@@ -212,7 +208,6 @@ combined_data = survey_data_wide |>
 # glimpse(combined_data)
 # # how many students do we have represented across *all three* datasets?
 # n_distinct(combined_data$class_id, combined_data$student_id)
-
 
 
 # SAVE DATA ----

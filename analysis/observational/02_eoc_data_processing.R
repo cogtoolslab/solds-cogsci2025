@@ -97,7 +97,7 @@ eoc_responses_codebook = responses_codebook |>
   ) |> 
   dplyr::select(-page, -page_num) |>
   group_by(book, release, chapter, chapter_num) |>
-  summarize(across(everything(), sum, na.rm = TRUE), .groups = "drop")
+  dplyr::summarize(across(everything(), sum, na.rm = TRUE), .groups = "drop")
 
 # Summarize performance by chapter
 checkpoints_eoc = responses_combined |>
@@ -105,7 +105,7 @@ checkpoints_eoc = responses_combined |>
   # combine if there are multiple pages per eoc in a chapter 
   # i.e., if a student is in two classes, they will appear as two separate students
   group_by(book, release, institution_id, class_id, student_id, chapter, chapter_num) |>
-  summarize(
+  dplyr::summarize(
     # How many questions did the student "submit" an answer to on this page
     questions_submitted = n(),
     # How many questions were answered correctly

@@ -10,17 +10,22 @@ pacman::p_load('tidyverse','here', 'dplyr', 'readr')
                
 here::i_am("analysis/observational/03_engagement_processing.R")
 
-DATA_PATH = here::here('data') # top-level directory for data
+DATA_PATH = here('data') # top-level directory for data
 PAGEVIEWS_DATA = file.path('2023-college', 'raw', 'page_views.Rdata') # path to pageviews data file
 CLASSES_DATA = file.path('2023-college', 'raw', 'classes.csv') # lookup used for matching institution and class with book and release
 PAGE_CODEBOOK_DATA = file.path('2023-college', 'codebooks', 'codebook_page_pageviews.csv') # codebook for matching chapter and page information
 
-OUTPUT_PATH = here('data', '2023-college-processed') # directory for writing processed data
+OUTPUT_PATH = file.path('data', '2023-college-processed') # directory for writing processed data
 # Create the directory if it doesn't exist
 if (!dir.exists(OUTPUT_PATH)) {
   dir.create(OUTPUT_PATH, recursive = TRUE)
 }
 
+RESULTS_PATH = here('results', '2023-college') # directory for writing final results 
+# Create the directory if it doesn't exist
+if (!dir.exists(RESULTS_PATH)) {
+  dir.create(RESULTS_PATH, recursive = TRUE)
+}
 
 # LOAD DATA ----
 
@@ -156,8 +161,6 @@ student_page_view_chapter_summary = student_page_view_summary |>
 # summary(student_page_view_chapter_summary$proportion_pages_complete_student)
 # unique(student_page_view_chapter_summary$proportion_pages_complete_student)
 
-
-
 # SAVE DATA ----
 
 # Save as .RData
@@ -167,10 +170,11 @@ write_csv(student_page_view_chapter_summary, file.path(OUTPUT_PATH, 'processed_c
 
 
 # SPLIT-HALF CORRELATION ----
+print('running split half correlation, will take a while ...')
 
 ## BOOTSTRAP ----
 set.seed(130)
-bootstrap_iters = 1000
+bootstrap_iters = 100 # can set to 1000 but will take a while to run
 
 split_half_corr_bootstrap = replicate(
   n = bootstrap_iters,
@@ -248,24 +252,30 @@ split_half_corr_bootstrap = replicate(
 )
 
 split_half_corr_bootstrap_df <- bind_rows(split_half_corr_bootstrap)
-glimpse(split_half_corr_bootstrap_df)
+#glimpse(split_half_corr_bootstrap_df)
 
-## SAVE ----
-# Save as .RData 
-save(split_half_corr_bootstrap_df, file = file.path(OUTPUT_PATH, 'processed_college_23_engagement_splithalf.RData'))
-# Save as csv
-write_csv(split_half_corr_bootstrap_df, file.path(OUTPUT_PATH, 'processed_college_23_engagement_splithalf.csv'))
+# ## SAVE ----
+# # Save as .RData 
+# save(split_half_corr_bootstrap_df, file = file.path(OUTPUT_PATH, 'processed_college_23_engagement_splithalf.RData'))
+# # Save as csv
+# write_csv(split_half_corr_bootstrap_df, file.path(OUTPUT_PATH, 'processed_college_23_engagement_splithalf.csv'))
 
 ## SUMMARY ----
 split_half_corr_bootstrap_df_summary = tibble(
-  pearson_mean = mean(split_half_corr_bootstrap_df$pearson),
-  pearson_lb = quantile(split_half_corr_bootstrap_df$pearson, 0.025),
-  pearson_ub = quantile(split_half_corr_bootstrap_df$pearson, 0.975),
-  spearman_mean = mean(split_half_corr_bootstrap_df$spearman),
-  spearman_lb = quantile(split_half_corr_bootstrap_df$spearman, 0.025),
-  spearman_ub = quantile(split_half_corr_bootstrap_df$spearman, 0.975),
+  # pearson_mean = mean(split_half_corr_bootstrap_df$pearson),
+  # pearson_lb = quantile(split_half_corr_bootstrap_df$pearson, 0.025),
+  # pearson_ub = quantile(split_half_corr_bootstrap_df$pearson, 0.975),
+  # spearman_mean = mean(split_half_corr_bootstrap_df$spearman),
+  # spearman_lb = quantile(split_half_corr_bootstrap_df$spearman, 0.025),
+  # spearman_ub = quantile(split_half_corr_bootstrap_df$spearman, 0.975),
   spearman_brown_mean = mean(split_half_corr_bootstrap_df$spearman_brown),
   spearman_brown_lb = quantile(split_half_corr_bootstrap_df$spearman_brown, 0.025),
   spearman_brown_ub = quantile(split_half_corr_bootstrap_df$spearman_brown, 0.975)
 )
 print(split_half_corr_bootstrap_df_summary)
+
+# # Save as .RData 
+# save(split_half_corr_bootstrap_df_summary, file = file.path(RESULTS_PATH, 'college_23_engagement_splithalf_summary.RData'))
+# # Save as csv
+# write_csv(split_half_corr_bootstrap_df_summary, file.path(RESULTS_PATH, 'college_23_engagement_splithalf_summary.csv'))
+

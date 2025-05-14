@@ -9,7 +9,7 @@ pacman::p_load('tidyverse','here', 'dplyr', 'readr')
 
 here::i_am("analysis/observational/01_survey_data_processing.R")
 
-DATA_PATH = here::here('data') # top-level directory for data
+DATA_PATH = here('data') # top-level directory for data
 RESPONSE_DATA = file.path('2023-college', 'raw', 'responses.Rdata') # path to response data file
 CODEBOOK_DATA = file.path('2023-college', 'codebooks', 'codebook_all_surveys.csv') # path to codebook data file
 CONSTRUCT_DATA = file.path('questions_to_constructs.csv') # path to construct lookup file
