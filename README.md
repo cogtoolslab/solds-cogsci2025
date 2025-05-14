@@ -37,8 +37,7 @@ This repository contains code to reproduce the results in our CogSci 2025 paper,
 
 
 ## Study 1 (observational)
-We analyzed data from 1306 stu-
-dents across 11 institutions to investigate how students’ initial psychological orientation relates to their subsequent engagement and learning.
+We analyzed data from 1306 students across 11 institutions to investigate how students’ initial psychological orientation relates to their subsequent engagement and learning.
 
 ## Study 2 (experimental)
 
