@@ -1,0 +1,42 @@
+question,construct_label
+"""How much do you agree with the following statement?
+
+My goal has been to avoid performing poorly compared to others. - Strongly disagree:Strongly agree""",performance goal
+"""How much do you agree with the following statement?
+
+My goal has been to learn as much as possible in this course. - Strongly disagree:Strongly agree""",learning goal
+"""How much do you agree with the following statement?
+
+I have been striving to understand the content in this course as thoroughly as possible. - Strongly disagree:Strongly agree""",learning goal
+"""How much do you agree with the following statement? 
+
+My aim has been to avoid doing worse than other students. - Strongly disagree:Strongly agree""",performance goal
+"""How much do you agree with the following statement?
+
+The effects of stress can be good and I should make use of them. - Strongly disagree:Strongly agree""",stress-as-enhancing mindset
+"""How much do you agree with the following statement?
+
+Stress generally stops me from learning and growing. - Strongly disagree:Strongly agree""",stress-as-enhancing mindset
+"""How well does the following statement describe you?
+
+When working on the lab assignments in this course, I am explicitly aware of the specific problem-solving strategies I am taking. - Not at all true of me:Very true of me""",strategic mindset
+"""How much do you agree with the following statement?
+
+Stress can help me to learn and grow. - Strongly disagree:Strongly agree""",stress-as-enhancing mindset
+"""Imagine that, later today or tomorrow, your teacher hands out two extra credit assignments. 
+You get to choose which one to do. You get the same number of points for trying either one. 
+
+One choice is an easy review—it has questions you already know how to answer, and you will probably get most of the answers right without having to think very much. It takes 30 minutes. 
+
+The other choice is a hard challenge—it has questions you don’t know how to answer, and you will probably get most of the problems wrong, but you might learn something new. It also takes 30 minutes. 
+
+If you had to pick right now, which would you pick?""",challenge seeking tendencies
+"""Do you think your body's stress responses (your heart, your sweat, your brain) would help you do well on the assignment, hurt your performance on the assignment, or not have any effect on your performance either way? 
+
+I think my body's stress response would ...""",stress-as-enhancing mindset
+"""How well does the following statement describe you?
+
+When working on the lab assignments in this course, I have been keeping track of how effective my problem-solving strategies have been. - Not at all true of me:Very true of me""",strategic mindset
+"""How well does the following statement describe you?
+
+Whenever I notice that one strategy was less effective when working on a lab assignment, I am in the habit of reassessing whether or not I am using the best strategy. - Not at all true of me:Very true of me""",strategic mindset
