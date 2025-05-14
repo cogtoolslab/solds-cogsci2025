@@ -1,0 +1,106 @@
+source,survey_order,origin,question,id,construct,scale_values,scale_flipped,scale_min,scale_max
+ck_pre_survey,1,coursekata pre-survey,"In general, I tend to feel very anxious about mathematics.",anx_ma_1,anxiety_math,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,I am anxious/nervous about learning R programming.,r_anx_1,anxiety_math,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,"In this class, you will use R (a programming language) to analyze data. How do you feel about this?",sent_pro_1,attitude_programming,6,FALSE,Strongly negative,Strongly Positive
+ck_pre_survey,1,coursekata pre-survey,I belong in this class.,blc2_1,belonging_general,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,I matter as a student in this class.,blc1_1,belonging_general,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,Which of the following courses have you successfully completed? (Check all that apply),ma_prep_ap_calc_college,experience_math,2,FALSE,NA,Calculus in college
+ck_pre_survey,1,coursekata pre-survey,Which of the following courses have you successfully completed? (Check all that apply),ma_prep_ap_calc_hs,experience_math,2,FALSE,NA,AP Calculus in high school
+ck_pre_survey,1,coursekata pre-survey,Which of the following courses have you successfully completed? (Check all that apply),ma_prep_ap_stats_hs,experience_math,2,FALSE,NA,AP Statistics in high school
+ck_pre_survey,1,coursekata pre-survey,Which of the following courses have you successfully completed? (Check all that apply),ma_prep_diff_stats_course,experience_math,2,FALSE,NA,A different statistics course (besides this one) in college
+ck_pre_survey,1,coursekata pre-survey,Have you had experience with computer programming before?,cs_prep,experience_programming,4,FALSE,No,"Yes, I have taken a computer programming class."
+ck_pre_survey,1,coursekata pre-survey,My statistics ability is something about me that I can't change much.,ms2_1,fixed_mindset_math,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,"You can learn new things, but you can't really change your basic statistics ability.",ms1_1,fixed_mindset_math,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,I think this class will be interesting.,iv1_1,interest_general,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,I will like this class.,iv2_1,interest_general,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,"I look forward to learning more about math, statistics, or data science.",f1_1,interest_math,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,"I want to take more math, statistics, or data science classes in the future.",f2_1,interest_math,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,"I would be interested in having a job someday that involved things like math, science, statistics, or data science.",f3_1,interest_math,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,I think that learning R programming will be enjoyable.,r_joy_1,interest_programming,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,I see myself as a statistics person.,identity_1,mindset_fixedBelonging,6,TRUE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,"To be honest, it is very important for me to do well compared to others in this class.",goal1_1,orientation_achievementGoal,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,"Honestly, the most important thing for me in this class is to understand the content as thoroughly as possible.",goal2_1,orientation_learningGoal,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,How well have you done in mathematics courses you have taken in the past?,ma_perf,past_performance_math,5,FALSE,Not at all well,Extremely well
+ck_pre_survey,1,coursekata pre-survey,I think I will have to give up too much to do well in this class.,cost2_1,sacrifice_perceived,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,I am confident I can learn the material in this class.,exp1_1,selfEfficacy,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,I expect to do well in this class.,exp2_1,selfEfficacy,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,How confident are you in your R skills?,conf_1,selfEfficacy_programming,6,FALSE,Not at all confident,Completely confident
+ck_pre_survey,1,coursekata pre-survey,I think this class is going to be too stressful for me,cost3_1,stress_expectation,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,Good grades in this class will improve my job and career chances.,uv_j1_1,value_task,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,I welcome the possibility of having a job in the future that involves R programming.,r_job_1,value_task,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,What I'm going to learn in this class will be relevant to my everyday life.,uv_d1_1,value_task,6,FALSE,Strongly disagree,Strongly agree
+ck_pre_survey,1,coursekata pre-survey,What I'm going to learn in this class will be useful in the future.,uv_f1_1,value_task,6,FALSE,Strongly disagree,Strongly agree
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+If I study in appropriate ways, then I will be able to learn the material in this course. - Not at all true of me:Very true of me""",MSLQ-ctrl-belief-1_1,belief_control,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+If I don't understand the course material, it is because I didn't try hard enough. - Not at all true of me:Very true of me""",MSLQ-ctrl-belief-2_1,belief_control,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,Synergistic Mindsets Intervention,"""Imagine that, later today or tomorrow, your teacher hands out two extra credit assignments. 
+You get to choose which one to do. You get the same number of points for trying either one. 
+
+One choice is an easy review—it has questions you already know how to answer, and you will probably get most of the answers right without having to think very much. It takes 30 minutes. 
+
+The other choice is a hard challenge—it has questions you don’t know how to answer, and you will probably get most of the problems wrong, but you might learn something new. It also takes 30 minutes. 
+
+If you had to pick right now, which would you pick?""",approach-intention1,challengeSeeking,2,TRUE,The hard assignment where I would possibly learn something new,The easy assignment where I would get most of the problems right
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+When I become confused about something for this course, I make sure to go back and sort it out. - Not at all true of me:Very true of me""",MSLQ-meta-self-reg-1_1,meta_self_regulation,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+When studying material for this course, I often come up with questions to test my own understanding. - Not at all true of me:Very true of me""",MSLQ-meta-self-reg-2_1,meta_self_regulation,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+When approaching new material in this course, I try to figure out what I am supposed to learn from it rather than just reading it over. - Not at all true of me:Very true of me""",MSLQ-meta-self-reg-3_1,meta_self_regulation,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+When studying for this course I try to determine which concepts I don't understand well. - Not at all true of me:Very true of me""",MSLQ-meta-self-reg-4_1,meta_self_regulation,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,Strategic Mindset,"""How well does the following statement describe you?
+
+When working on the lab assignments in this course, I am explicitly aware of the specific problem-solving strategies I am taking. - Not at all true of me:Very true of me""",Q119_1,mindset_strategic,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,Strategic Mindset,"""How well does the following statement describe you?
+
+When working on the lab assignments in this course, I have been keeping track of how effective my problem-solving strategies have been. - Not at all true of me:Very true of me""",Q120_1,mindset_strategic,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,Strategic Mindset,"""How well does the following statement describe you?
+
+Whenever I notice that one strategy was less effective when working on a lab assignment, I am in the habit of reassessing whether or not I am using the best strategy. - Not at all true of me:Very true of me""",Q121_1,mindset_strategic,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,AGQR,"""How much do you agree with the following statement?
+
+My goal has been to avoid performing poorly compared to others. - Strongly disagree:Strongly agree""",Q112_1,orientation_achievementGoal,7,FALSE,Strongly disagree,Strongly agree
+qualtrics_midquarter,2,AGQR,"""How much do you agree with the following statement? 
+
+My aim has been to avoid doing worse than other students. - Strongly disagree:Strongly agree""",Q115_1,orientation_achievementGoal,7,FALSE,Strongly disagree,Strongly agree
+qualtrics_midquarter,2,AGQR,"""How much do you agree with the following statement?
+
+My goal has been to learn as much as possible in this course. - Strongly disagree:Strongly agree""",Q113_1,orientation_learningGoal,7,FALSE,Strongly disagree,Strongly agree
+qualtrics_midquarter,2,AGQR,"""How much do you agree with the following statement?
+
+I have been striving to understand the content in this course as thoroughly as possible. - Strongly disagree:Strongly agree""",Q114_1,orientation_learningGoal,7,FALSE,Strongly disagree,Strongly agree
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+I'm confident I can understand the basic concepts taught in this course. - Not at all true of me:Very true of me""",MSLQ-self-efficacy-1_1,selfEfficacy,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+I'm certain I can understanding the most difficult material presented in this course. - Not at all true of me:Very true of me""",MSLQ-self-efficacy-2_1,selfEfficacy,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+I'm confident I can do an excellent job on the assignments and quizzes in this course. - Not at all true of me:Very true of me""",MSLQ-self-efficacy-3_1,selfEfficacy,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,"Synergistic Mindsets Intervention, stress-can-be-enhancing mindset","""How much do you agree with the following statement?
+
+Stress can help me to learn and grow. - Strongly disagree:Strongly agree""",manipulation1_1,stress_mindset,7,FALSE,Strongly disagree,Strongly agree
+qualtrics_midquarter,2,"Synergistic Mindsets Intervention, stress-can-be-enhancing mindset","""How much do you agree with the following statement?
+
+The effects of stress can be good and I should make use of them. - Strongly disagree:Strongly agree""",Q116_1,stress_mindset,7,FALSE,Strongly disagree,Strongly agree
+qualtrics_midquarter,2,Synergistic Mindsets Intervention,"""Do you think your body's stress responses (your heart, your sweat, your brain) would help you do well on the assignment, hurt your performance on the assignment, or not have any effect on your performance either way? 
+
+I think my body's stress response would ...""",approach-intention2,stress_mindset,5,TRUE,Definitely Help My Performance,Definitely Hurt My Performance
+qualtrics_midquarter,2,"Synergistic Mindsets Intervention, stress-can-be-enhancing mindset","""How much do you agree with the following statement?
+
+Stress generally stops me from learning and growing. - Strongly disagree:Strongly agree""",Q118_1,stress_mindset,7,TRUE,Strongly disagree,Strongly agree
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+I think what I learn in this course will be useful to me in the future. - Not at all true of me:Very true of me""",MSLQ-task-value-1_1,value_task,7,FALSE,Not at all true of me,Very true of me
+qualtrics_midquarter,2,MSLQ,"""How well does the following statement describe you?
+
+Understanding the subject matter in this course is very important to me. - Not at all true of me:Very true of me""",MSLQ-task-value-2_1,value_task,7,FALSE,Not at all true of me,Very true of me
