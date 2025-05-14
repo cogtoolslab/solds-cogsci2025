@@ -1,29 +1,46 @@
-# Project Template
+# Linking student psychological orientation, engagement, and learning in college-level introductory data science
 
-This is an example of how a cogtoolslab project repo should be organized.
+This repository contains code to reproduce the results in our CogSci 2025 paper, [Linking student psychological orientation, engagement, and learning in college-level introductory data science]()
 
-It contains several subdirectories that will contain standard elements of almost every project:
+<p align="center">
+  <img width="80%" src="paper/ck_dataset_methods.png"></img>
+</p>
 
-- `admin`: This directory will contain administrative data not already stored in the external running project log (often a google doc). Please check out the `author_contributions.md` towards the beginning of a project.
-- `analysis` (aka `notebooks`): This directory will typically contain jupyter/Rmd notebooks for exploratory code development and data analysis.
-- `experiments`: If this is a project that will involve collecting human behavioral data, this is where you want to put your experimental code. If this is a project that will involve evaluation of a computational model's behavior on a task, this is also where you want to put the task code.
-- `model`: If this is a cognitive modeling project, this is where you want to put your model definitions. If this project involves training neural networks, you might consider starting out putting training scripts in here, but then splitting these off into a separate `training` dir. 
-- `results`: This directory is meant to contain "intermediate" results of your computational/behavioral experiments. It should minimally contain two subdirectories: `csv` and `plots`. So `/results/csv/` is the path to use when saving out `csv` files containing tidy dataframes. And `/results/plots/` is the path to use when saving out `.pdf`/`.png` plots, a small number of which may be then polished and formatted for figures in a publication. *Important: Before pushing any csv files containing human behavioral data to a public code repository, triple check that these data files are properly anonymized. This means no bare AMT Worker ID's.*
-- `stimuli`: This directory is meant to contain any download/preprocessing scripts for data that are _inputs_ to this project. For many projects, these will be images. This is also where you want to place any scripts that will upload your data to our `stimuli`  MongoDB database and any image data to Amazon S3 (so that it has a semi-permanent URL you can use to insert into your web experiment.)
-- `utils`: This directory is meant to contain any files containing helper functions. 
+## Layout
 
-### For general handy computing tips, please see the [`handy_tips` repo](https://github.com/cogtoolslab/handy_tips).
+```
+├── analysis
+│   ├── observational
+│   └── experimental    
+├── data
+│   ├── 2023-college
+│   └── 2024_fall_clean   
+├── experiments
+│   ├── control_module
+│   ├── intervention_module
+│   └── survey_items
+├── paper
+├── results
+│   ├── 2023-college
+│   └── 2024_fall
+```
 
-### Note about other project documentation 
+`analysis`: contains R scripts for data processing and analysis. 
+* `observational`: includes all scripts to clean and analyze data in study 1. Run `run_R_2023_scripts.sh` to derive all figures and results.
+*  `experimental`: includes all scripts to clean and analyze data in study 2. Run `run_R_2024_scripts.sh` to derive all figures and results.
 
-#### Project Log
 
-When we spin up a new project, the first thing we'll often do to collect our thoughts is create a Google Doc to function as a running "log" of project updates and meeting notes. This is b/c this file format is easy to share and flexible in format. This google doc is also where you should take notes during our meetings, and collect high-level TODO items, especially those that are not immediately actionable in code. For code development TODO's, we will often instead use GitHub Issues.
+`data`: includes data for both studies. See [data/readme.md](./data/README.md) for details. 
+`experiments`: includes control and intervention materials for study 2.  
+`results`: includes unedited figures in paper and modeling results.
+`paper`: contains the LaTeX source code along with figures.
 
-#### Study Plans
 
-Once we are in the later stages of desigining a new human behavioral experiment and preparing to run our first pilot, we will write up a pre-registration and either put it under version control within the project repo OR post it to the [Open Science Framework](https://osf.io/). We subscribe to the philosophy that ["pre-registrations are a plan, not a prison."](https://www.cos.io/blog/preregistration-plan-not-prison) They help us transparently document our thinking and decision-making process both for ourselves and for others, and will help us distinguish between confirmatory and exploratory findings. We do not believe that there is a single best way to write a pre-registration, but in many cases a more detailed plan will help us to clarify our experimental logic and set up our analyses accordingly (i.e., what each hypothesis predicts, which measures and analyses we will use to evaluate each relevant hypothesis). 
+## Study 1 (observational)
+We analyzed data from 1306 stu-
+dents across 11 institutions to investigate how students’ initial psychological orientation relates to their subsequent engagement and learning.
 
-#### Manuscripts (including conference papers/abstracts) 
+## Study 2 (experimental)
 
-When we are preparing to write up a manuscript (or a conference paper), we will create a new repo, usually following the convention: `projectname_latex`. This is where you will want to place your LaTeX source `.tex` files for your paper and your publication-ready figures as high-resolution `.pdf` files in the `figures` directory. We typically format and fine-tune our figures using Adobe Illustrator.
+We developed and tested an intervention aspects of students’ learning experience (e.g. mindsets about stress and metacognitive awareness) among 146 students enrolled in a single course.
+
