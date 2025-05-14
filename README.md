@@ -31,8 +31,11 @@ This repository contains code to reproduce the results in our CogSci 2025 paper,
 
 
 `data`: includes data for both studies. See [data/readme.md](./data/README.md) for details. 
-`experiments`: includes control and intervention materials for study 2.  
+
+`experiments`: includes control and intervention materials for study 2.
+
 `results`: includes unedited figures in paper and modeling results.
+
 `paper`: contains the LaTeX source code along with figures.
 
 
