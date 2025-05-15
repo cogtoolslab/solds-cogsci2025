@@ -169,6 +169,14 @@ manipulation_data = qualtrics_data |>
 n_distinct(manipulation_data |> filter(module_variation == "A") |>pull(student_id)) # 57 students in control
 n_distinct(manipulation_data |> filter(module_variation == "B") |>pull(student_id)) # 63 students in intervention condition
 
+# mean
+manipulation_data_avg = manipulation_data |> 
+  group_by(module_variation) |>
+  summarize(
+    sample_avg_stress_mindset = mean(q_construct_mean_stress_mindset, na.rm = TRUE),
+    sample_avg_strategic_mindset = mean(q_construct_mean_mindset_strategic, na.rm = TRUE),
+  )
+
 ## stress-as-enhancing mindset ----
 stress_mindset_model_baseline = lm(q_construct_mean_stress_mindset ~ 1,
                            data = manipulation_data)
@@ -179,6 +187,8 @@ stress_mindset_model <- lm(q_construct_mean_stress_mindset ~ 1 + module_variatio
 anova(stress_mindset_model_baseline, stress_mindset_model)
 
 stress_predictions <- ggpredict(stress_mindset_model, terms = "module_variation")
+stress_predictions = stress_predictions |> 
+  left_join(manipulation_data_avg |> select(module_variation, sample_avg_stress_mindset), by = c('x' = 'module_variation'))
 stress_predictions
 
 ## strategic mindset ----
@@ -191,6 +201,8 @@ strategic_mindset_model <- lm(q_construct_mean_mindset_strategic ~  module_varia
 anova(strategic_mindset_baseline, strategic_mindset_model) 
 
 strategic_predictions <- ggpredict(strategic_mindset_model, terms = "module_variation")
+strategic_predictions = strategic_predictions |> 
+  left_join(manipulation_data_avg |> select(module_variation, sample_avg_strategic_mindset), by = c('x' = 'module_variation'))
 strategic_predictions
 
 ## OTHERS ----
@@ -200,7 +212,7 @@ challenge_seeking_baseline <- lm(q_construct_mean_challengeSeeking ~ 1,
 
 challenge_seeking_model <- lm(q_construct_mean_challengeSeeking ~ 1+ module_variation,
                               data = manipulation_data)
-# anova(challenge_seeking_baseline, challenge_seeking_model)
+anova(challenge_seeking_baseline, challenge_seeking_model)
 
 ### learning goal ----
 learningGoal_baseline <- lm(q_construct_mean_orientation_learningGoal ~ 1,
@@ -208,7 +220,7 @@ learningGoal_baseline <- lm(q_construct_mean_orientation_learningGoal ~ 1,
 
 learningGoal_model <- lm(q_construct_mean_orientation_learningGoal ~ 1+ module_variation,
                          data = manipulation_data)
-# anova(learningGoal_baseline, learningGoal_model)
+anova(learningGoal_baseline, learningGoal_model)
 
 ### performance goal ----
 
@@ -218,12 +230,12 @@ performanceGoal_baseline <- lm(q_construct_mean_orientation_performanceGoal ~ 1,
 performanceGoal_model <- lm(q_construct_mean_orientation_performanceGoal ~ 1+ module_variation,
                             data = manipulation_data)
 
-# anova(performanceGoal_baseline, performanceGoal_model)
+anova(performanceGoal_baseline, performanceGoal_model)
 
 ## PLOT BAR ----
 
 # Create bar plot for Stress Mindset
-stress_p <- ggplot(stress_predictions, aes(x = x, y = predicted, fill = x)) +
+stress_p <- ggplot(stress_predictions, aes(x = x, y = sample_avg_stress_mindset, fill = x)) +
   geom_bar(stat = "identity", color = "black", alpha = 0.7) +
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0) +
   scale_y_continuous(limits = c(0, 0.9)) +  # Set y-axis range from 0 to 1
@@ -237,7 +249,7 @@ stress_p <- ggplot(stress_predictions, aes(x = x, y = predicted, fill = x)) +
   theme(legend.position = "none")
 
 # Create bar plot for Strategic Mindset
-strategic_p <- ggplot(strategic_predictions, aes(x = x, y = predicted, fill = x)) +
+strategic_p <- ggplot(strategic_predictions, aes(x = x, y = sample_avg_strategic_mindset, fill = x)) +
   geom_bar(stat = "identity", color = "black", alpha = 0.7) +  # Bars
   geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0) +  # Error bars
   scale_y_continuous(limits = c(0, 0.9)) +  # Set y-axis range from 0 to 1
