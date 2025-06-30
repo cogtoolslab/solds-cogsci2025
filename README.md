@@ -1,6 +1,6 @@
 # Linking student psychological orientation, engagement, and learning in college-level introductory data science
 
-This repository contains code to reproduce the results in our CogSci 2025 paper, [Linking student psychological orientation, engagement, and learning in college-level introductory data science]().
+This repository contains code to reproduce the results in our CogSci 2025 paper, [Linking student psychological orientation, engagement, and learning in college-level introductory data science](https://cogtoolslab.github.io/pdf/zheng_cogsci_2025.pdf).
 
 <p align="center">
   <img width="80%" src="paper/ck_dataset_methods.png"></img>
