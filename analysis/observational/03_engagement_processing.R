@@ -85,34 +85,6 @@ page_views_processed = page_views_processed |>
 
 # CALCULATE ENGAGEMENT ----
 
-# Proportion of pages the student completes in each chapter over time
-student_page_view_summary = page_views_processed |>
-  # filter for completed pages
-  filter(was_complete == 'true') |>
-  # keep only the first appearance (earliest time) of each unique page for each student
-  group_by(class_id, student_id, chapter_num, page) |>
-  arrange(dt_accessed_processed, .by_group = TRUE) |>
-  distinct(class_id, student_id, chapter_num, page, .keep_all = TRUE) |>
-  ungroup() |>
-  # calculate total unique pages accessed in each class
-  group_by(class_id, chapter_num) |>
-  mutate(
-    total_unique_pages_accessed_class = n_distinct(page),
-  ) |>
-  ungroup() |>
-  # calculate proportion of pages in each chapter accessed by each student
-  group_by(class_id, student_id, chapter_num) |>
-  arrange(dt_accessed_processed, .by_group = TRUE) |>
-  mutate(
-    total_unique_pages_accessed_student = n_distinct(page),
-    pages_so_far = row_number(),
-    proportion_pages_accessed = pages_so_far / total_unique_pages_accessed_class
-  ) |>
-  ungroup()
-# # sanity checks
-# glimpse(student_page_view_summary)
-
-
 # Calculate student completion for each page that others in their class completed
 # NB: this has separate rows for each page within a chapter, allowing for completion percentage
 # by page ("so far"), along with (redundant) rows calculating total completion percentage in each chapter
