@@ -291,8 +291,104 @@ ggsave(file.path(FIGURES_OUT_PATH, "eoc_density.pdf"),
 # MODELING ----
 
 ## 1) engagement <- survey constructs ----
-## 2) EOC <- survey constructs + engagement ----
-## 3) EOC <- survey constructs ----
+engagement_avg_baseline = lmer(
+  data = model_data_summary,
+  avg_prop_pages_complete ~ 1 +
+    (1 | class_id),
+  REML = F
+)
+
+engagement_avg_attitudes = lmer(
+  data = model_data_summary,
+  avg_prop_pages_complete ~ 1 +
+    construct_mean_stress_expectation +
+    construct_mean_selfEfficacy +
+    # construct_mean_selfEfficacy_programming +
+    construct_mean_anxiety_math +
+    construct_mean_attitude_programming +
+    construct_mean_interest_math +
+    # construct_mean_interest_programming +
+    construct_mean_value_task +
+    construct_mean_experience_programming +
+    # construct_mean_experience_math +
+    (1 | class_id),
+  REML = F
+)
+
+anova(engagement_avg_baseline, engagement_avg_attitudes)
+
+# stress_expectation 
+engagement_avg_stress_expectation = lmer(
+  data = model_data_summary,
+  avg_prop_pages_complete ~ 1 +
+    construct_mean_stress_expectation +
+    (1 | class_id),
+  REML = F
+)
+
+# selfEfficacy
+engagement_avg_selfEfficacy = lmer(
+  data = model_data_summary,
+  avg_prop_pages_complete ~ 1 +
+    construct_mean_selfEfficacy +
+    (1 | class_id),
+  REML = F
+)
+
+# anxiety_math
+engagement_avg_anxiety_math = lmer(
+  data = model_data_summary,
+  avg_prop_pages_complete ~ 1 +
+    construct_mean_anxiety_math +
+    (1 | class_id),
+  REML = F
+)
+
+# attitude_programming
+engagement_avg_attitude_programming = lmer(
+  data = model_data_summary,
+  avg_prop_pages_complete ~ 1 +
+    construct_mean_attitude_programming +
+    (1 | class_id),
+  REML = F
+)
+
+# interest_math
+engagement_avg_interest_math = lmer(
+  data = model_data_summary,
+  avg_prop_pages_complete ~ 1 +
+    construct_mean_interest_math +
+    (1 | class_id),
+  REML = F
+)
+
+# value_task
+engagement_avg_value_task = lmer(
+  data = model_data_summary,
+  avg_prop_pages_complete ~ 1 +
+    construct_mean_value_task +
+    (1 | class_id),
+  REML = F
+)
+
+# experience_programming
+engagement_avg_experience_programming = lmer(
+  data = model_data_summary,
+  avg_prop_pages_complete ~ 1 +
+    construct_mean_experience_programming +
+    (1 | class_id),
+  REML = F
+)
+
+anova(engagement_avg_baseline, engagement_avg_stress_expectation)
+anova(engagement_avg_baseline, engagement_avg_selfEfficacy)
+anova(engagement_avg_baseline, engagement_avg_anxiety_math)
+anova(engagement_avg_baseline, engagement_avg_attitude_programming)
+anova(engagement_avg_baseline, engagement_avg_interest_math)
+anova(engagement_avg_baseline, engagement_avg_value_task)
+anova(engagement_avg_baseline, engagement_avg_experience_programming)
+
+## 2) EOC <- survey constructs ----
 eoc_avg_baseline = lmer(
   data = model_data_summary,
   avg_eoc_score ~ 1 +
@@ -325,7 +421,6 @@ eoc_avg_nervous_comb = lmer(data = model_data_summary,
                             REML = F
 )
 
-
 # experience, value, self efficacy, programming
 eoc_avg_exp_confval_comb = lmer(data = model_data_summary,
                                 avg_eoc_score ~ 1 +
@@ -337,6 +432,22 @@ eoc_avg_exp_confval_comb = lmer(data = model_data_summary,
                                   (1 | class_id),
                                 REML = F
 )
+
+# with engagement too 
+eoc_avg_attitudes_eng = lmer(data = model_data_summary, avg_eoc_score ~ 1 +
+                          avg_prop_pages_complete +
+                           construct_mean_stress_expectation +
+                           construct_mean_selfEfficacy +
+                           # construct_mean_selfEfficacy_programming +
+                           construct_mean_anxiety_math +
+                           construct_mean_attitude_programming +
+                           construct_mean_interest_math +
+                           # construct_mean_interest_programming +
+                           construct_mean_value_task +
+                           construct_mean_experience_programming +
+                           # construct_mean_experience_math +
+                           (1 | class_id),
+                         REML = F)
 
 # calculate relative aic
 eoc_avg_baseline_aic = AIC(eoc_avg_baseline) 
@@ -357,6 +468,38 @@ actual_AIC = data.frame(
   )
 
 glimpse(actual_AIC)
+
+## 3) EOC <- engagement ----
+eoc_avg_engagement = lmer(
+  data = model_data_summary,
+  avg_eoc_score ~ 1 +
+    avg_prop_pages_complete + 
+    (1 | class_id),
+  REML = F
+)
+  
+anova(eoc_avg_baseline, eoc_avg_engagement)
+
+## 4) EOC <- survey constructs + engagement ----
+eoc_avg_engagement_attitudes = lmer(
+  data = model_data_summary,
+  avg_eoc_score ~ 1 +
+    avg_prop_pages_complete + 
+    construct_mean_stress_expectation +
+    construct_mean_selfEfficacy +
+    # construct_mean_selfEfficacy_programming +
+    construct_mean_anxiety_math +
+    construct_mean_attitude_programming +
+    construct_mean_interest_math +
+    # construct_mean_interest_programming +
+    construct_mean_value_task +
+    construct_mean_experience_programming +
+    # construct_mean_experience_math +
+    (1 | class_id),
+  REML = F
+)
+anova(eoc_avg_attitudes, eoc_avg_engagement_attitudes) 
+
 
 ### AIC BOOTSTRAPPING ----
 print('running AIC bootstrapping, will take a while ...')
